@@ -27,9 +27,10 @@ function App() {
     // })
 
   // }
-
+const [loader, setLoader]= useState(false)
 
   const fetchMoiveHandler = async ()=>{
+    setLoader(true)
 
     const response =  await fetch('https://swapi.dev/api/films')
     console.log(response)
@@ -46,15 +47,19 @@ function App() {
       }
     })
     setMoives(transFormedMoives)
+    setLoader(false)
   }
 
   return (
     <React.Fragment>
       <section>
         <button onClick={fetchMoiveHandler}>Fetch Movies</button>
+      
       </section>
       <section>
-        <MoviesList movies={moives} />
+        { !loader  && moives.length>0 && <MoviesList movies={moives} />}
+        { !loader  && moives.length===0 && <p>no moives founds</p>}
+        { loader && <div><span className="loader"></span></div>}
       </section>
     </React.Fragment>
   );
