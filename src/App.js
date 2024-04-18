@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -29,8 +29,9 @@ function App() {
   // })
 
   // }
+  
 
-  const fetchMoiveHandler = async () => {
+  const fetchMoiveHandler =  useCallback( async () => {
     setLoader(true);
     setError(null);
 
@@ -60,7 +61,12 @@ function App() {
       }, 5000);
     }
     setLoader(false);
-  };
+  },[])
+
+  useEffect(()=>{
+    fetchMoiveHandler()
+  },[fetchMoiveHandler])
+  
 
   let content = <p>found no moive</p>;
 
