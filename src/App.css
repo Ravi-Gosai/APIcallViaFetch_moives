@@ -37,6 +37,12 @@ button:active {
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
   }
+  .form{
+    /*  */
+    width: 50vw;
+    height: fit-content;
+    padding: 30px;
+  }
 
   @keyframes rotation {
   0% {

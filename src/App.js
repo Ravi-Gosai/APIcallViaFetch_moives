@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import Form from "./components/Form";
 
 function App() {
   const [moives, setMoives] = useState([]);
@@ -83,10 +84,15 @@ function App() {
       </div>
     );
   }
+  const addMoiveFun = (moive)=>{
+    console.log(moive)
+    setMoives([...moives,moive])
+  }
 
   return (
     <React.Fragment>
       <section>
+    <Form addMoiveFun={addMoiveFun}></Form>
         <button onClick={fetchMoiveHandler}>Fetch Movies</button>
       </section>
       <section>
