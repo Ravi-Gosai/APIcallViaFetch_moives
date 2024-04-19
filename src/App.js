@@ -37,29 +37,40 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch("https://swapi.dev/api/films");
+      const response = await fetch("https://reacthttp-4b1b6-default-rtdb.firebaseio.com/moives.json");
       console.log(response);
       if (!response.ok) {
         throw new Error("something went wrong ..retrying");
       }
       const dataJson = await response.json();
-      console.log(dataJson.results);
+      console.log(dataJson);
+      const loadedMoive = []
+    
+      for(let key in dataJson){
+        loadedMoive.push({
+          id : key,
+          title : dataJson[key].title,
+          releaseDate : dataJson[key].releaseDate,
+          openingtext : dataJson[key].openingText
+        })
+      }
+      
 
-      const transFormedMoives = dataJson.results.map((moive) => {
-        return {
-          id: moive.episode_id,
-          title: moive.title,
-          releaseDate: moive.release_date,
-          openingText: moive.opening_crawl,
-        };
-      });
-      setMoives(transFormedMoives);
+      // const transFormedMoives = dataJson.results.map((moive) => {
+      //   return {
+      //     id: moive.episode_id,
+      //     title: moive.title,
+      //     releaseDate: moive.release_date,
+      //     openingText: moive.opening_crawl,
+      //   };
+      // });
+      setMoives(loadedMoive);
     } catch (error) {
       console.log(error.message);
       setError(error.message);
-      setInterval(() => {
-        fetchMoiveHandler ()
-      }, 5000);
+      // setInterval(() => {
+      //   fetchMoiveHandler ()
+      // }, 5000);
     }
     setLoader(false);
   },[])
@@ -84,9 +95,17 @@ function App() {
       </div>
     );
   }
-  const addMoiveFun = (moive)=>{
+  const addMoiveFun =  async (moive)=>{
     console.log(moive)
-    setMoives([...moives,moive])
+   const response = await fetch('https://reacthttp-4b1b6-default-rtdb.firebaseio.com/moives.json',{
+      method: 'POST',
+      body : JSON.stringify(moive),
+      headers : {
+        'Content-Type' : 'application/json'
+      }
+    })
+    const data = await response.json()
+    // console.log(data) 
   }
 
   return (

@@ -15,6 +15,7 @@ const Form = props =>{
             releaseDate:releaseDate,
             openingText:openingText,
             id: Math.random()
+           
 
         }
         // console.log(obj)
